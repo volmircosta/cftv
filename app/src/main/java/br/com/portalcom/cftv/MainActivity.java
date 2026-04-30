@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.webkit.WebChromeClient;
+import android.webkit.CookieManager;
+import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -42,19 +44,62 @@ public class MainActivity extends Activity {
         settings.setJavaScriptEnabled(true);
         settings.setDomStorageEnabled(true);
         settings.setDatabaseEnabled(true);
+        settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
         settings.setMediaPlaybackRequiresUserGesture(false);
         settings.setLoadWithOverviewMode(true);
         settings.setUseWideViewPort(true);
+        settings.setJavaScriptCanOpenWindowsAutomatically(true);
+        settings.setSupportMultipleWindows(false);
+        settings.setAllowContentAccess(true);
+        settings.setAllowFileAccess(false);
         settings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        CookieManager.getInstance().setAcceptCookie(true);
+        CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true);
 
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-                return false;
+                view.loadUrl(request.getUrl().toString());
+                return true;
+            }
+
+            @Override
+            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+                super.onReceivedError(view, request, error);
+                if (request.isForMainFrame()) {
+                    webView.loadData(
+                            "<html><body style='background:#101314;color:#eef5f1;font-family:sans-serif;padding:24px'>" +
+                                    "<h2>Portal CFTV</h2><p>Falha ao carregar o painel. Verifique a rede local e tente novamente.</p>" +
+                                    "</body></html>",
+                            "text/html",
+                            "UTF-8"
+                    );
+                }
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                view.evaluateJavascript(
+                        "document.querySelectorAll('iframe').forEach(function(frame){frame.setAttribute('allow','autoplay; fullscreen; encrypted-media; picture-in-picture');});",
+                        null
+                );
             }
         });
 
+        webView.setDownloadListener((url, userAgent, contentDisposition, mimeType, contentLength) -> {
+            webView.loadUrl(url);
+        });
+
         webView.setWebChromeClient(new WebChromeClient() {
+            @Override
+            public boolean onCreateWindow(WebView view, boolean isDialog, boolean isUserGesture, android.os.Message resultMsg) {
+                WebView.HitTestResult result = view.getHitTestResult();
+                String url = result != null ? result.getExtra() : null;
+                if (url != null) webView.loadUrl(url);
+                return false;
+            }
+            
             @Override
             public void onShowCustomView(View view, CustomViewCallback callback) {
                 if (customView != null) {
