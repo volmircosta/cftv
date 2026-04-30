@@ -1,0 +1,37 @@
+services:
+  mediamtx:
+    image: bluenviron/mediamtx:latest
+    container_name: mediamtx
+    restart: unless-stopped
+    ports:
+      - 8554:8554
+      - 8888:8888
+      - 8889:8889
+      - 8189:8189/udp
+      - 9996:9996
+      - 1935:1935
+    volumes:
+      - ./mediamtx/mediamtx.yml:/mediamtx.yml:ro
+      - ./recordings:/recordings
+
+  panel:
+    build: ./panel
+    container_name: camera-panel
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      PORT: 3000
+      DATA_DIR: /app/data
+      TZ: America/Sao_Paulo
+      SESSION_SECRET: portalcom-local-panel-2026-change-this
+      PLAYBACK_INTERNAL_URL: http://mediamtx:9996
+      PLAYBACK_PUBLIC_URL: http://172.16.21.122:9996
+      MEDIAMTX_API_URL: http://mediamtx:9997
+      RTMP_PUBLIC_HOST: 172.16.21.122
+    ports:
+      - 80:3000
+    volumes:
+      - ./panel/data:/app/data
+    depends_on:
+      - mediamtx

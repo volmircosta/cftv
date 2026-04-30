@@ -1,0 +1,12 @@
+curl 'http://192.168.10.76/cgi-bin/opdev.cgi' \
+  -H 'Accept: */*' \
+  -H 'Accept-Language: pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7' \
+  -H 'Connection: keep-alive' \
+  -H 'Content-Type: text/plain;charset=UTF-8' \
+  -b 'Language=English; User=portalcom' \
+  -H 'Origin: http://192.168.10.76' \
+  -H 'Referer: http://192.168.10.76/' \
+  -H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36' \
+  -H 'X-Requested-With: XMLHttpRequest' \
+  --data-raw 'P2TFX7EnB5Y2LLQpFdN0R/9Gk/tAVq/0rqddXz03bP3wXPM74IgKzJ7gDFZ32TKlPznyV+OcD5ZimwuMWmk/n0kvHalDGYdYlihVzzJKZLMKMrkdMM3O5a0R9CWRko/voUg3t151KBe3Duhp3NZDAVFG8gZZEo6yPE0Oc+7ZNgsylTnl1Lqnema6uxQXFOIHiTmmYjIUG02+uwDil2uXADUXlCgVFsjbwD3ZrTVBPcMzgtQY5smbzJn488E5qPMdNRVIZsgS9dEHl2ND2zywE/p2xy1iOH3QcD5eTxTRrPrrpFYvcwL+tTkZLFSZFt/LVQow+MtHoFqJcMk0r3j7WQ==' \
+  --insecure

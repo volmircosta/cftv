@@ -1,0 +1,12 @@
+curl 'http://192.168.10.76/cgi-bin/login.cgi' \
+  -H 'Accept: */*' \
+  -H 'Accept-Language: pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7' \
+  -H 'Connection: keep-alive' \
+  -H 'Content-Type: text/plain;charset=UTF-8' \
+  -b 'Language=English; User=portalcom' \
+  -H 'Origin: http://192.168.10.76' \
+  -H 'Referer: http://192.168.10.76/' \
+  -H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36' \
+  -H 'X-Requested-With: XMLHttpRequest' \
+  --data-raw 'RYJ4eTQiBuYE0PiXgyi3737x6+xuhQqN9VonLJ8lU7sAzZncU19a42EmkZiQvgZa' \
+  --insecure
