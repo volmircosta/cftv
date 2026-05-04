@@ -1,9 +1,0 @@
-<network-security-config>
-    <base-config cleartextTrafficPermitted="true" />
-    <domain-config cleartextTrafficPermitted="true">
-        <domain includeSubdomains="true">172.16.21.122</domain>
-        <domain includeSubdomains="true">portalcom.com.br</domain>
-        <domain includeSubdomains="true">portalcom.net.br</domain>
-        <domain includeSubdomains="true">teste.portalcom.net.br</domain>
-    </domain-config>
-</network-security-config>
